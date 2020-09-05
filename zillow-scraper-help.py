@@ -5,8 +5,8 @@ from random import uniform, randint
 import requests
 
 # Randimization
-MIN_RAND = 2.69
-MAX_RAND = 4.34
+MIN_RAND = 0.69
+MAX_RAND = 1.34
 LONG_MIN_RAND = 4.20
 LONG_MAX_RAND = 11.13
 
@@ -42,11 +42,12 @@ for pageNumber in range(15):
     body = content.body
     # print(body)
 
-    with open("sf-house-body-{}.txt".format(pageNumber), "w") as f:
-        f.write(str(content))
+    # with open("sf-house-body-{}.txt".format(pageNumber), "w") as f:
+    #     f.write(str(content))
 
-    currentCardLinks = body.find_all(class_="list-card-link")
-    cardLinks.extend(currentCardLinks)
+    for currentCardLinks in body.find_all(class_="list-card-link list-card-img", href=True):
+        print(currentCardLinks)
+        cardLinks.extend(currentCardLinks['href'])
 
 print("--- Writing Links to File ---")
 with open("sf-house-links.txt", "w") as f:
