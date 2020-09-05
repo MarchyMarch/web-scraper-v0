@@ -42,8 +42,8 @@ for pageNumber in range(15):
     body = content.body
     # print(body)
 
-    # with open("sf-house-body-{}.txt".format(pageNumber), "w") as f:
-        # f.write(str(body))
+    with open("sf-house-body-{}.txt".format(pageNumber), "w") as f:
+        f.write(str(content))
 
     currentCardLinks = body.find_all(class_="list-card-link")
     cardLinks.extend(currentCardLinks)
