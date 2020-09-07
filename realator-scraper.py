@@ -14,6 +14,10 @@ def smallSleep():
     rand = uniform(MIN_RAND, MAX_RAND)
     time.sleep(rand)
 
+def longSleep():
+    rand = uniform(LONG_MIN_RAND, LONG_MAX_RAND)
+    time.sleep(rand)
+
 print("----- Begin Scraping -----")
 
 # Fake headers in order to not hit a captcha
@@ -29,18 +33,24 @@ for pageNumber in range(10):
     # if (pageNumber%2) == 0:
     # 	if pageNumber != 0:
     # 		time.sleep(30)
+    smallSleep()
+
+    if (pageNumber%2) == 0 and pageNumber != 0:
+        longSleep()
 
     response = requests.get("https://mercadopartners.com")
+
+    url = ""
 
     if pageNumber == 0:
         pass
     elif pageNumber == 1:
-        response = requests.get("https://www.realtor.com/realestateandhomes-search/San-Francisco_CA/sby-6/", headers=headers, timeout=5)
+        url = "https://www.realtor.com/realestateandhomes-search/San-Francisco_CA/sby-6/"
     else:
-        response = requests.get("https://www.realtor.com/realestateandhomes-search/San-Francisco_CA/sby-6/pg-{}".format(pageNumber), headers=headers, timeout=5)
+        url = "https://www.realtor.com/realestateandhomes-search/San-Francisco_CA/sby-6/pg-{}".format(pageNumber)
 
+    response = requests.get(url, headers=headers, timeout=5)
 
-    smallSleep()
 
     content = BeautifulSoup(response.content, "html.parser")
 
